@@ -74,3 +74,17 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+
+app.get("/users", (req, res) => {
+    const selectUsersQuery = "SELECT * FROM users";
+    con.query(selectUsersQuery, (err, result) => {
+        if(err) {
+            console.log(err);
+            res.status(500).json({ error: "Error occurred while fetching users data from database" });
+        } else {
+            console.log("Users data retrieved successfully");
+            res.status(200).json(result); // Send the retrieved data back as JSON response
+        }
+    });
+});
